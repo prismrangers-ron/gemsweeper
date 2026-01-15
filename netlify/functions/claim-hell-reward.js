@@ -4,13 +4,12 @@ const TOKEN_SECRET = process.env.TOKEN_SECRET || 'default-dev-secret-change-in-p
 const TOKEN_EXPIRY_MS = 10 * 60 * 1000; // 10 minutes
 
 // The password exists ONLY here on the server
-const HELL_PASSWORD = "HAMTAO_SAYS_OK";
-const HELL_MESSAGE = `Congratulations on beating Hell mode!
+const HELL_PASSWORD = "HANTAO SAYS OK";
+const HELL_MESSAGE = `Only ONE player can claim the reward, the first one who does.
+When claiming it, you'll be asked for a secret password.
+Don't share it… unless you want to make Hantao sad.
 
-Take a screenshot of your board and post it on X to claim your rewards.
-You will be asked for a secret password to claim your rewards—do not share it with anyone!
-
-password : ${HELL_PASSWORD}`;
+Password: ${HELL_PASSWORD}`;
 
 function verifyToken(token) {
   try {
