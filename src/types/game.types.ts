@@ -29,6 +29,6 @@ export const GRID_CONFIG = {
   hell: {
     rows: 25,
     cols: 25,
-    mine_count: 10, // For testing, change to 205 later
+    mine_count: 205,
   },
 } as const;
