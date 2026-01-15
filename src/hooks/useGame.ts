@@ -3,7 +3,7 @@ import { gameService } from '../services/gameService';
 import { boardRepository } from '../repositories/boardRepository';
 import { timerService } from '../services/timerService';
 import { clueService } from '../services/clueService';
-import type { Board, GameStatus } from '../types/game.types';
+import type { Board, GameStatus, GameMode } from '../types/game.types';
 import { GRID_CONFIG } from '../types/game.types';
 
 interface UseGameReturn {
@@ -11,19 +11,21 @@ interface UseGameReturn {
   status: GameStatus;
   elapsed_time: number;
   remaining_mines: number;
-  clue: string | null;
+  reward: string | null;
   handleTileClick: (row: number, col: number) => void;
   handleRightClick: (row: number, col: number) => void;
   handleChord: (row: number, col: number) => void;
   resetGame: () => void;
 }
 
-export const useGame = (): UseGameReturn => {
-  const [board, setBoard] = useState<Board>(() => boardRepository.create());
+export const useGame = (mode: GameMode): UseGameReturn => {
+  const config = GRID_CONFIG[mode];
+  
+  const [board, setBoard] = useState<Board>(() => boardRepository.create(mode));
   const [status, setStatus] = useState<GameStatus>('ready');
   const [elapsedTime, setElapsedTime] = useState(0);
   const [flagCount, setFlagCount] = useState(0);
-  const [clue, setClue] = useState<string | null>(null);
+  const [reward, setReward] = useState<string | null>(null);
 
   const timerRef = useRef<number | null>(null);
 
@@ -41,18 +43,16 @@ export const useGame = (): UseGameReturn => {
     }
   }, []);
 
-  // Claim the clue from server when winning
   const handleWin = useCallback(async (newBoard: Board) => {
     stopTimer();
     setBoard(newBoard);
     setStatus('won');
     
-    // Fetch the clue from the server
-    const serverClue = await clueService.claimClue();
-    if (serverClue) {
-      setClue(serverClue);
+    const serverReward = await clueService.claimReward(mode);
+    if (serverReward) {
+      setReward(serverReward);
     }
-  }, [stopTimer]);
+  }, [stopTimer, mode]);
 
   const handleTileClick = useCallback(async (row: number, col: number) => {
     if (status === 'won' || status === 'lost') return;
@@ -60,21 +60,16 @@ export const useGame = (): UseGameReturn => {
     let currentBoard = board;
     let currentStatus = status;
 
-    // First click: place mines and start session
     if (currentStatus === 'ready') {
-      // Start a secure session for clue retrieval (non-blocking)
       clueService.startSession();
-      
-      currentBoard = gameService.placeMines(currentBoard, row, col);
+      currentBoard = gameService.placeMines(currentBoard, row, col, mode);
       currentStatus = 'playing';
       startTimer();
     }
 
-    // Check if tile is flagged or already revealed
     const tile = currentBoard[row][col];
     if (tile.is_flagged || tile.is_revealed) return;
 
-    // Check mine hit
     if (gameService.isMineHit(currentBoard, row, col)) {
       stopTimer();
       clueService.clearSession();
@@ -84,18 +79,16 @@ export const useGame = (): UseGameReturn => {
       return;
     }
 
-    // Reveal tile
     const newBoard = gameService.revealTile(currentBoard, row, col);
 
-    // Check win
-    if (gameService.checkWin(newBoard)) {
+    if (gameService.checkWin(newBoard, mode)) {
       await handleWin(newBoard);
       return;
     }
 
     setBoard(newBoard);
     setStatus(currentStatus);
-  }, [board, status, startTimer, stopTimer, handleWin]);
+  }, [board, status, startTimer, stopTimer, handleWin, mode]);
 
   const handleRightClick = useCallback((row: number, col: number) => {
     if (status === 'won' || status === 'lost') return;
@@ -124,30 +117,30 @@ export const useGame = (): UseGameReturn => {
       return;
     }
 
-    if (gameService.checkWin(newBoard)) {
+    if (gameService.checkWin(newBoard, mode)) {
       await handleWin(newBoard);
       return;
     }
 
     setBoard(newBoard);
-  }, [board, status, stopTimer, handleWin]);
+  }, [board, status, stopTimer, handleWin, mode]);
 
   const resetGame = useCallback(() => {
     stopTimer();
     clueService.clearSession();
-    setBoard(boardRepository.create());
+    setBoard(boardRepository.create(mode));
     setStatus('ready');
     setElapsedTime(0);
     setFlagCount(0);
-    setClue(null);
-  }, [stopTimer]);
+    setReward(null);
+  }, [stopTimer, mode]);
 
   return {
     board,
     status,
     elapsed_time: elapsedTime,
-    remaining_mines: GRID_CONFIG.mine_count - flagCount,
-    clue,
+    remaining_mines: config.mine_count - flagCount,
+    reward,
     handleTileClick,
     handleRightClick,
     handleChord,

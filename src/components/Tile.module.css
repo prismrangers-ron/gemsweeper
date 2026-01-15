@@ -63,8 +63,8 @@
 .num7 { color: var(--color-num-7); }
 .num8 { color: var(--color-num-8); }
 
-/* Mobile responsive */
-@media (max-width: 500px) {
+/* Mobile responsive - match GameBoard grid sizes */
+@media (max-width: 700px) {
   .tile {
     width: 20px;
     height: 20px;
@@ -73,11 +73,20 @@
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 550px) {
   .tile {
-    width: 18px;
-    height: 18px;
-    font-size: 11px;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
     border-radius: 3px;
+  }
+}
+
+@media (max-width: 450px) {
+  .tile {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+    border-radius: 2px;
   }
 }

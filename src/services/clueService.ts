@@ -1,4 +1,5 @@
-// Service to handle secure clue retrieval via Netlify Functions
+// Service to handle secure clue/reward retrieval via Netlify Functions
+import type { GameMode } from '../types/game.types';
 
 let sessionToken: string | null = null;
 
@@ -22,14 +23,18 @@ export const clueService = {
     }
   },
 
-  // Claim the clue using the session token
-  async claimClue(): Promise<string | null> {
+  // Claim the reward based on game mode
+  async claimReward(mode: GameMode): Promise<string | null> {
     if (!sessionToken) {
       return null;
     }
 
+    const endpoint = mode === 'hell' 
+      ? '/.netlify/functions/claim-hell-reward'
+      : '/.netlify/functions/claim-clue';
+
     try {
-      const response = await fetch('/.netlify/functions/claim-clue', {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: sessionToken }),
@@ -37,9 +42,9 @@ export const clueService = {
 
       if (response.ok) {
         const data = await response.json();
-        // Clear token after use
         sessionToken = null;
-        return data.clue;
+        // Return either 'clue' or 'message' depending on endpoint
+        return data.clue || data.message;
       }
       
       return null;
@@ -53,6 +58,3 @@ export const clueService = {
     sessionToken = null;
   },
 };
-
-
-

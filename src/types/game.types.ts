@@ -11,6 +11,8 @@ export type Board = Tile[][];
 
 export type GameStatus = 'ready' | 'playing' | 'won' | 'lost';
 
+export type GameMode = 'normal' | 'hell';
+
 export interface GameState {
   board: Board;
   status: GameStatus;
@@ -19,8 +21,14 @@ export interface GameState {
 }
 
 export const GRID_CONFIG = {
-  rows: 16,
-  cols: 16,
-  mine_count: 53,
+  normal: {
+    rows: 16,
+    cols: 16,
+    mine_count: 53,
+  },
+  hell: {
+    rows: 25,
+    cols: 25,
+    mine_count: 10, // For testing, change to 205 later
+  },
 } as const;
-

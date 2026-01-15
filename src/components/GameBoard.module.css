@@ -1,8 +1,8 @@
-/* 16 × 16 grid */
+/* Dynamic grid sizing using CSS custom properties */
 .grid {
   display: grid;
-  grid-template-columns: repeat(16, 24px);
-  grid-template-rows: repeat(16, 24px);
+  grid-template-columns: repeat(var(--grid-cols, 16), 24px);
+  grid-template-rows: repeat(var(--grid-rows, 16), 24px);
   gap: 2px;
   background-color: var(--color-black);
   padding: 2px;
@@ -14,18 +14,26 @@
 }
 
 /* Mobile: smaller tiles */
-@media (max-width: 500px) {
+@media (max-width: 700px) {
   .grid {
-    grid-template-columns: repeat(16, 20px);
-    grid-template-rows: repeat(16, 20px);
+    grid-template-columns: repeat(var(--grid-cols, 16), 20px);
+    grid-template-rows: repeat(var(--grid-rows, 16), 20px);
   }
 }
 
 /* Even smaller screens */
-@media (max-width: 380px) {
+@media (max-width: 550px) {
   .grid {
-    grid-template-columns: repeat(16, 18px);
-    grid-template-rows: repeat(16, 18px);
+    grid-template-columns: repeat(var(--grid-cols, 16), 16px);
+    grid-template-rows: repeat(var(--grid-rows, 16), 16px);
     gap: 1px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 450px) {
+  .grid {
+    grid-template-columns: repeat(var(--grid-cols, 16), 14px);
+    grid-template-rows: repeat(var(--grid-rows, 16), 14px);
   }
 }

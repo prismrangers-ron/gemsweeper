@@ -1,10 +1,12 @@
 import { Tile } from './Tile';
-import type { Board, GameStatus } from '../types/game.types';
+import type { Board, GameStatus, GameMode } from '../types/game.types';
+import { GRID_CONFIG } from '../types/game.types';
 import styles from './GameBoard.module.css';
 
 interface GameBoardProps {
   board: Board;
   status: GameStatus;
+  mode: GameMode;
   on_tile_click: (row: number, col: number) => void;
   on_tile_right_click: (row: number, col: number) => void;
   on_chord: (row: number, col: number) => void;
@@ -13,14 +15,21 @@ interface GameBoardProps {
 export const GameBoard: React.FC<GameBoardProps> = ({
   board,
   status,
+  mode,
   on_tile_click,
   on_tile_right_click,
   on_chord,
 }) => {
   const game_over = status === 'lost';
+  const config = GRID_CONFIG[mode];
+
+  const gridStyle = {
+    '--grid-cols': config.cols,
+    '--grid-rows': config.rows,
+  } as React.CSSProperties;
 
   return (
-    <div className={styles.grid}>
+    <div className={styles.grid} style={gridStyle}>
       {board.map((row, row_idx) =>
         row.map((tile, col_idx) => (
           <Tile
@@ -39,4 +48,3 @@ export const GameBoard: React.FC<GameBoardProps> = ({
     </div>
   );
 };
-

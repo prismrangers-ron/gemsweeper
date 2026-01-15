@@ -1,16 +1,16 @@
-// Game business logic - to be implemented in Phase 2
 import { boardRepository } from '../repositories/boardRepository';
-import type { Board } from '../types/game.types';
+import type { Board, GameMode } from '../types/game.types';
 import { GRID_CONFIG } from '../types/game.types';
 
 export const gameService = {
-  placeMines(board: Board, exclude_row: number, exclude_col: number): Board {
+  placeMines(board: Board, exclude_row: number, exclude_col: number, mode: GameMode): Board {
+    const config = GRID_CONFIG[mode];
     const new_board = boardRepository.clone(board);
     let placed = 0;
 
-    while (placed < GRID_CONFIG.mine_count) {
-      const row = Math.floor(Math.random() * GRID_CONFIG.rows);
-      const col = Math.floor(Math.random() * GRID_CONFIG.cols);
+    while (placed < config.mine_count) {
+      const row = Math.floor(Math.random() * config.rows);
+      const col = Math.floor(Math.random() * config.cols);
 
       if (new_board[row][col].is_mine) continue;
       if (row === exclude_row && col === exclude_col) continue;
@@ -23,8 +23,8 @@ export const gameService = {
   },
 
   calculateAdjacent(board: Board): Board {
-    for (let row = 0; row < GRID_CONFIG.rows; row++) {
-      for (let col = 0; col < GRID_CONFIG.cols; col++) {
+    for (let row = 0; row < board.length; row++) {
+      for (let col = 0; col < board[0].length; col++) {
         if (board[row][col].is_mine) continue;
         const adjacent = boardRepository.getAdjacentTiles(board, row, col);
         board[row][col].adjacent_mines = adjacent.filter(t => t.is_mine).length;
@@ -73,8 +73,10 @@ export const gameService = {
     return new_board;
   },
 
-  checkWin(board: Board): boolean {
-    const safe_tiles = GRID_CONFIG.rows * GRID_CONFIG.cols - GRID_CONFIG.mine_count;
+  checkWin(board: Board, mode: GameMode): boolean {
+    const config = GRID_CONFIG[mode];
+    const totalTiles = config.rows * config.cols;
+    const safeTiles = totalTiles - config.mine_count;
     let revealed = 0;
 
     for (const row of board) {
@@ -83,7 +85,7 @@ export const gameService = {
       }
     }
 
-    return revealed === safe_tiles;
+    return revealed === safeTiles;
   },
 
   isMineHit(board: Board, row: number, col: number): boolean {
@@ -102,11 +104,9 @@ export const gameService = {
     return new_board;
   },
 
-  // Chord: if flags around a number match the number, reveal all unflagged adjacent tiles
   chordReveal(board: Board, row: number, col: number): { board: Board; hitMine: boolean } {
     const tile = board[row][col];
     
-    // Only works on revealed number tiles
     if (!tile.is_revealed || tile.adjacent_mines === 0) {
       return { board, hitMine: false };
     }
@@ -114,7 +114,6 @@ export const gameService = {
     const adjacent = boardRepository.getAdjacentTiles(board, row, col);
     const flaggedCount = adjacent.filter(t => t.is_flagged).length;
 
-    // Only chord if flag count matches the number
     if (flaggedCount !== tile.adjacent_mines) {
       return { board, hitMine: false };
     }
@@ -129,7 +128,6 @@ export const gameService = {
         }
         new_board[adj.row][adj.col].is_revealed = true;
         
-        // Cascade if empty
         if (!adj.is_mine && adj.adjacent_mines === 0) {
           new_board = this.cascadeReveal(new_board, adj.row, adj.col);
         }
@@ -139,4 +137,3 @@ export const gameService = {
     return { board: new_board, hitMine };
   },
 };
-

@@ -1,9 +1,45 @@
 .container {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  gap: 16px;
+  background-color: var(--color-yellow);
+}
+
+.hellMode {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 50%, #1a1a1a 100%);
+}
+
+.backButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: var(--color-black);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.hellMode .backButton {
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.backButton:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.hellMode .backButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .game {
@@ -13,11 +49,16 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.hellMode .game {
+  background-color: rgba(220, 38, 38, 0.1);
+  border: 2px solid rgba(220, 38, 38, 0.3);
+}
+
 @media (max-width: 800px) {
   .container {
     padding: 10px;
-    align-items: flex-start;
-    padding-top: 20px;
+    padding-top: 60px;
+    justify-content: flex-start;
   }
 
   .game {

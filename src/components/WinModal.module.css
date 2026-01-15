@@ -54,6 +54,25 @@
   margin: 20px 0;
 }
 
+.rewardText {
+  text-align: left;
+  padding: 16px;
+  background-color: rgba(220, 38, 38, 0.1);
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.rewardText p {
+  margin-bottom: 8px;
+}
+
+.rewardText p:last-child {
+  margin-bottom: 0;
+  font-weight: 700;
+  color: #f59e0b;
+  font-family: monospace;
+}
+
 .button {
   background-color: var(--color-teal);
   color: var(--color-white);
@@ -75,7 +94,33 @@
   transform: scale(0.98);
 }
 
+/* Hell Mode overrides - must come last for specificity */
+.hellModal {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+  border: 2px solid #dc2626;
+  max-width: 480px;
+}
 
+.hellModal h2 {
+  color: #dc2626;
+}
 
+.hellModal p {
+  color: #e5e5e5 !important;
+}
 
+.hellModal .rewardText {
+  background-color: rgba(255, 255, 255, 0.08);
+}
 
+.hellModal .rewardText p:last-child {
+  color: #f59e0b !important;
+}
+
+.hellModal .button {
+  background-color: #dc2626;
+}
+
+.hellModal .button:hover {
+  background-color: #b91c1c;
+}

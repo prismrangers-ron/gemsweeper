@@ -1,5 +1,4 @@
-// Board state management - to be implemented in Phase 2
-import type { Board, Tile } from '../types/game.types';
+import type { Board, Tile, GameMode } from '../types/game.types';
 import { GRID_CONFIG } from '../types/game.types';
 
 const DIRECTIONS = [
@@ -9,11 +8,12 @@ const DIRECTIONS = [
 ] as const;
 
 export const boardRepository = {
-  create(): Board {
+  create(mode: GameMode): Board {
+    const config = GRID_CONFIG[mode];
     const board: Board = [];
-    for (let row = 0; row < GRID_CONFIG.rows; row++) {
+    for (let row = 0; row < config.rows; row++) {
       board[row] = [];
-      for (let col = 0; col < GRID_CONFIG.cols; col++) {
+      for (let col = 0; col < config.cols; col++) {
         board[row][col] = {
           row,
           col,
@@ -28,8 +28,8 @@ export const boardRepository = {
   },
 
   getTile(board: Board, row: number, col: number): Tile | null {
-    if (row < 0 || row >= GRID_CONFIG.rows) return null;
-    if (col < 0 || col >= GRID_CONFIG.cols) return null;
+    if (row < 0 || row >= board.length) return null;
+    if (col < 0 || col >= board[0].length) return null;
     return board[row][col];
   },
 
@@ -43,8 +43,3 @@ export const boardRepository = {
     return board.map(row => row.map(tile => ({ ...tile })));
   },
 };
-
-
-
-
-
