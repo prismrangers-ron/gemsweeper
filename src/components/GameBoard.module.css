@@ -37,3 +37,33 @@
     grid-template-rows: repeat(var(--grid-rows, 16), 14px);
   }
 }
+
+/* Hell mode: smaller tiles on medium screens to keep landscape */
+@media (max-width: 950px) {
+  .hellGrid {
+    grid-template-columns: repeat(36, 18px);
+    grid-template-rows: repeat(24, 18px);
+  }
+}
+
+/* Hell mode mobile: flip to portrait (24 cols x 36 rows) */
+@media (max-width: 700px) {
+  .hellGrid {
+    grid-template-columns: repeat(24, 18px);
+    grid-template-rows: repeat(36, 18px);
+  }
+}
+
+@media (max-width: 500px) {
+  .hellGrid {
+    grid-template-columns: repeat(24, 14px);
+    grid-template-rows: repeat(36, 14px);
+  }
+}
+
+@media (max-width: 400px) {
+  .hellGrid {
+    grid-template-columns: repeat(24, 12px);
+    grid-template-rows: repeat(36, 12px);
+  }
+}

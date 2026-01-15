@@ -28,8 +28,10 @@ export const GameBoard: React.FC<GameBoardProps> = ({
     '--grid-rows': config.rows,
   } as React.CSSProperties;
 
+  const gridClassName = `${styles.grid} ${mode === 'hell' ? styles.hellGrid : ''}`;
+
   return (
-    <div className={styles.grid} style={gridStyle}>
+    <div className={gridClassName} style={gridStyle}>
       {board.map((row, row_idx) =>
         row.map((tile, col_idx) => (
           <Tile

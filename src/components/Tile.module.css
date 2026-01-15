@@ -90,3 +90,12 @@
     border-radius: 2px;
   }
 }
+
+@media (max-width: 400px) {
+  .tile {
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+    border-radius: 2px;
+  }
+}
