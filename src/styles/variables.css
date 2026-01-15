@@ -1,0 +1,35 @@
+:root {
+  /* Primary */
+  --color-background: #FFD753;
+
+  /* Accents */
+  --color-purple: #8F68FC;
+  --color-pink: #FF66CC;
+  --color-teal: #1ABF9E;
+  --color-blue: #2673E8;
+
+  /* Neutrals */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* Number colors */
+  --color-num-1: #2673E8;
+  --color-num-2: #1ABF9E;
+  --color-num-3: #FF66CC;
+  --color-num-4: #8F68FC;
+  --color-num-5: #B22222;
+  --color-num-6: #008B8B;
+  --color-num-7: #000000;
+  --color-num-8: #808080;
+
+  /* Spacing */
+  --radius-tile: 6px;
+  --radius-container: 12px;
+  --radius-modal: 16px;
+  --radius-button: 8px;
+}
+
+
+
+
+
