@@ -62,8 +62,8 @@ export const useGame = (): UseGameReturn => {
 
     // First click: place mines and start session
     if (currentStatus === 'ready') {
-      // Start a secure session for clue retrieval
-      await clueService.startSession();
+      // Start a secure session for clue retrieval (non-blocking)
+      clueService.startSession();
       
       currentBoard = gameService.placeMines(currentBoard, row, col);
       currentStatus = 'playing';
