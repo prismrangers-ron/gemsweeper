@@ -53,55 +53,65 @@
   border: none;
   border-radius: var(--radius-tile);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
   text-transform: uppercase;
   white-space: nowrap;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .normalButton {
-  background: linear-gradient(135deg, rgba(143, 104, 252, 0.7) 0%, rgba(122, 82, 224, 0.7) 100%);
+  background: linear-gradient(180deg, #a78bfa 0%, #8f68fc 50%, #7c4dff 100%);
   color: var(--color-white);
   box-shadow: 
-    0 4px 16px rgba(143, 104, 252, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+    0 4px 0 #5b3cc4,
+    0 6px 12px rgba(91, 60, 196, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .normalButton:hover {
-  transform: translateY(-4px) scale(1.02);
-  background: linear-gradient(135deg, rgba(143, 104, 252, 0.9) 0%, rgba(122, 82, 224, 0.9) 100%);
+  transform: translateY(-2px);
   box-shadow: 
-    0 8px 32px rgba(143, 104, 252, 0.6),
-    0 0 20px rgba(143, 104, 252, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 6px 0 #5b3cc4,
+    0 8px 16px rgba(91, 60, 196, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .normalButton:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(2px);
+  box-shadow: 
+    0 2px 0 #5b3cc4,
+    0 3px 8px rgba(91, 60, 196, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
 .hellButton {
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.7) 0%, rgba(153, 27, 27, 0.7) 100%);
+  background: linear-gradient(180deg, #f87171 0%, #dc2626 50%, #b91c1c 100%);
   color: var(--color-white);
   box-shadow: 
-    0 4px 16px rgba(220, 38, 38, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 100, 100, 0.3);
+    0 4px 0 #7f1d1d,
+    0 6px 12px rgba(127, 29, 29, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .hellButton:hover {
-  transform: translateY(-4px) scale(1.02);
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.9) 0%, rgba(153, 27, 27, 0.9) 100%);
+  transform: translateY(-2px);
   box-shadow: 
-    0 8px 32px rgba(220, 38, 38, 0.6),
-    0 0 20px rgba(255, 50, 50, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 6px 0 #7f1d1d,
+    0 8px 16px rgba(127, 29, 29, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .hellButton:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(2px);
+  box-shadow: 
+    0 2px 0 #7f1d1d,
+    0 3px 8px rgba(127, 29, 29, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 480px) {
