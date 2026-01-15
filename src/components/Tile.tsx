@@ -1,10 +1,11 @@
 import { useRef, useCallback, useEffect } from 'react';
-import type { Tile as TileData } from '../types/game.types';
+import type { Tile as TileData, GameMode } from '../types/game.types';
 import styles from './Tile.module.css';
 
 interface TileProps {
   tile: TileData;
   game_over: boolean;
+  mode: GameMode;
   on_click: () => void;
   on_right_click: (e: React.MouseEvent) => void;
   on_chord: () => void;
@@ -15,6 +16,7 @@ const LONG_PRESS_DURATION = 450; // ms - slightly longer for Android
 export const Tile: React.FC<TileProps> = ({
   tile,
   game_over,
+  mode,
   on_click,
   on_right_click,
   on_chord,
@@ -40,6 +42,8 @@ export const Tile: React.FC<TileProps> = ({
 
   const getClassName = (): string => {
     const classes = [styles.tile];
+    
+    if (mode === 'hell') classes.push(styles.hellTile);
 
     if (tile.is_revealed) {
       classes.push(styles.revealed);

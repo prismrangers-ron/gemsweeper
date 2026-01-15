@@ -38,6 +38,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
             key={`${row_idx}-${col_idx}`}
             tile={tile}
             game_over={game_over}
+            mode={mode}
             on_click={() => on_tile_click(row_idx, col_idx)}
             on_right_click={(e) => {
               e.preventDefault();

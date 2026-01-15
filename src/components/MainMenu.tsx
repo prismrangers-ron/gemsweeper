@@ -19,17 +19,18 @@ export const MainMenu: React.FC<MainMenuProps> = ({ on_select_mode }) => {
             className={styles.normalButton}
             onClick={() => on_select_mode('normal')}
           >
-            NORMAL MODE
+            ✨ NORMAL MODE ✨
           </button>
           <button 
             className={styles.hellButton}
             onClick={() => on_select_mode('hell')}
           >
-            HELL MODE
+            🔥 HELL MODE 🔥
           </button>
         </div>
       </div>
     </div>
   );
 };
+
 

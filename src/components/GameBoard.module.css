@@ -46,24 +46,34 @@
   }
 }
 
-/* Hell mode mobile: flip to portrait (24 cols x 36 rows) */
+/* Hell mode mobile: keep same orientation, just smaller tiles */
 @media (max-width: 700px) {
   .hellGrid {
-    grid-template-columns: repeat(24, 18px);
-    grid-template-rows: repeat(36, 18px);
+    grid-template-columns: repeat(36, 12px);
+    grid-template-rows: repeat(24, 12px);
   }
 }
 
 @media (max-width: 500px) {
   .hellGrid {
-    grid-template-columns: repeat(24, 14px);
-    grid-template-rows: repeat(36, 14px);
+    grid-template-columns: repeat(36, 10px);
+    grid-template-rows: repeat(24, 10px);
+    gap: 1px;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 420px) {
   .hellGrid {
-    grid-template-columns: repeat(24, 12px);
-    grid-template-rows: repeat(36, 12px);
+    grid-template-columns: repeat(36, 8px);
+    grid-template-rows: repeat(24, 8px);
+    gap: 1px;
+    padding: 1px;
+  }
+}
+
+@media (max-width: 340px) {
+  .hellGrid {
+    grid-template-columns: repeat(36, 7px);
+    grid-template-rows: repeat(24, 7px);
   }
 }
