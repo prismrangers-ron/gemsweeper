@@ -61,7 +61,6 @@ export const useGame = (mode: GameMode): UseGameReturn => {
     let currentStatus = status;
 
     if (currentStatus === 'ready') {
-      clueService.startSession();
       currentBoard = gameService.placeMines(currentBoard, row, col, mode);
       currentStatus = 'playing';
       startTimer();
@@ -72,7 +71,6 @@ export const useGame = (mode: GameMode): UseGameReturn => {
 
     if (gameService.isMineHit(currentBoard, row, col)) {
       stopTimer();
-      clueService.clearSession();
       const revealedBoard = gameService.revealAllMines(currentBoard);
       setBoard(revealedBoard);
       setStatus('lost');
@@ -110,7 +108,6 @@ export const useGame = (mode: GameMode): UseGameReturn => {
 
     if (hitMine) {
       stopTimer();
-      clueService.clearSession();
       const revealedBoard = gameService.revealAllMines(newBoard);
       setBoard(revealedBoard);
       setStatus('lost');
@@ -127,7 +124,6 @@ export const useGame = (mode: GameMode): UseGameReturn => {
 
   const resetGame = useCallback(() => {
     stopTimer();
-    clueService.clearSession();
     setBoard(boardRepository.create(mode));
     setStatus('ready');
     setElapsedTime(0);
